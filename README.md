@@ -12,10 +12,10 @@ Members:
 ## ▶️ How to Run
 1. Clone the repository:
    ```bash
-   git clone https://github.com/CCDSTRU-S22A-Group-1/CC-DSTRU-Machine-Project-T2Y2526/
+   git clone https://github.com/cassuee/CCDSALG-MCO1.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd CC-DSTRU-Machine-Project-T2Y2526
+   cd CCDSALG-MCO1
    ```
-3. Compile and run according to the programming language used.
+3. Compile and run
