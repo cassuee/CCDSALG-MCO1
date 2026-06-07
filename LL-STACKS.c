@@ -111,28 +111,3 @@ DisplayStack(Stack S)
    
     printf("\n\n");
 }
-
-int main()
-{
-    Stack S;
-    S = CreateStack();
-
-    Push(S, 1); // 1 becomes the top node
-    Push(S, 2); 
-    Push(S, 3);
-    Push(S, 4);
-
-    DisplayStack(S);
-
-    printf("Top Element: %d\n", Top(S));
-
-    printf("Popped: %d\n", Pop(S)); // Popping topmost element: should be 4
-    printf("Popped: %d\n", Pop(S)); // Popping the next topmost element: should be 3
-	printf("\n");
-	
-    DisplayStack(S); // 2 1
-
-    printf("Top Element: %d\n", Top(S)); // 2
-
-    return 0;
-}
