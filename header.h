@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "SERVO_Queue.h"
-#include "LL-STACKS.h"
-#include "Char-STACKS.h"
+#include "Queue.h"
+#include "IntStack.h"
+#include "CharStack.h"
 
 #define MAX_LIMIT 200
 
