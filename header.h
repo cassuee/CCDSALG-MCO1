@@ -13,7 +13,7 @@
 typedef char Str[50];
 
 void infixToPostfix(char expr[], char* res);
-bool isOperand(char c);
+bool isOperator(char c);
 int precedence(char ope);
-int compute(int n1, int n2,char operand);
+int compute(int n1, int n2,char operator);
 int evaluate(Str equation);

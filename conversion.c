@@ -6,25 +6,19 @@
 int
 main()
 {
-	int i;
-	int length;
 	char expression[MAX_LIMIT];
 	char result[MAX_LIMIT];
 	
 	/* To get the user input */
 	printf("Enter Infix Expression: ");
 	fgets(expression, MAX_LIMIT, stdin);
+
 	
+	printf("\nConverting expression...\n");
 	infixToPostfix(expression, result);
-	
-	length = strlen(result);
-	
-	printf("Postfix Expression: ");
-	for(i = 0; i < length; i++)
-	{
-		printf("%c", result[i]);
-	}
-	
+	printf("\nPostfix Expression: %s\n",result);
+
+	printf("Result: %d\n",evaluate(result));
 	return 0;
 }
 
@@ -72,7 +66,7 @@ infixToPostfix(char expr[], char* res)
 			res[j++] = ' ';
 			i--;
 		}
-		else if(isOperand(expr[i]))
+		else if(isOperator(expr[i]))
 		{
 			/* >= if not ^ , and if ^ then just > */
 			while(!isEmptyCStack(stack) &&  TopC(stack) != '(' &&
