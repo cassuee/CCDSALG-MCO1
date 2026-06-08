@@ -18,4 +18,11 @@ Members:
    ```bash
    cd CCDSALG-MCO1
    ```
-3. Compile and run
+3. Compile using this command:
+   ```bash
+   gcc -Wall -std=c99 libs/CharStack.c libs/IntStack.c libs/Queue.c evaluate.c conversion.c main.c -o app
+   ```
+4. Run using:
+   ```bash
+   .\app
+   ```
