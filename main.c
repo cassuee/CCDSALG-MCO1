@@ -9,7 +9,12 @@ main()
 	/* To get the user input */
 	printf("Enter Infix Expression: ");
 	fgets(expression, MAX_LIMIT, stdin);
-
+	
+	if(!validateExpression(expression))
+    {
+        printf("Conversion stopped.\n");
+        return 0;
+    } 									
 	
 	printf("\nConverting expression...\n");
 	infixToPostfix(expression, result);
