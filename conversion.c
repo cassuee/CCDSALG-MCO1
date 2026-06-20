@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "header.h"
 
-#define MAX_LIMIT 200
-
 int
 precedence(char ope)
 {

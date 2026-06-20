@@ -162,13 +162,14 @@ int evaluate(Str equation)
     for(i=0;i<strlen(equation);i++)
     {
         Str substring;
-        if(!(equation[i] == ' '))
+        if(equation[i] != ' ')
         {
                 substring[j] = equation[i];
                 j++;
         } 
         else
         {
+            substring[j] = '\0'; 
             if(!isOperator(equation[i-1])){
                 Push(stk,atoi(substring));
             }
