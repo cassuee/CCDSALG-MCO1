@@ -50,99 +50,87 @@ bool validateExpression(char exp[]) // Error-Handling Function ----> (1-4) is on
     int i; // indexing variable
     int parenCount = 0; // for parenthesis checking
     bool expectOperand = true; // for operand checking
+	bool valid = true; // character validity flag
 
     for(i = 0; exp[i] != '\0' && exp[i] != '\n'; i++)
     {
         char ch = exp[i];
  
-		if(ch == ' ') // (1) if statement to ignore whitespaces
+		if(ch == ' ') // if statement to ignore whitespaces
 		{
 		
 		}
 		// This checks if the next character is either a valid operand or operator
         else if(!((ch >= '0' && ch <= '9') || ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '%' 
-			|| ch == '^' || ch == '(' || ch == ')')) // (1)
+			|| ch == '^' || ch == '(' || ch == ')'))
         {
             printf("ERROR: Invalid character '%c'\n", ch);
-            return false;
+            valid = false;
         }
 		
-		else if(ch == '/') // (1) this automatically flags the expression as invalid if it sees a 0 after '/' 
-		{                  // so it also flags expressions such as 1/011 or 12+1/02 as invalid
-            int j;
-			j = i + 1;
-
-            while(exp[j] == ' ')
-                j++;
-            if(exp[j] == '0') // (2)
-            {
-				printf("WARNING: Possible division by zero detected near index %d\n", i);
-				return false;
-            }
-        }
-            
-        else // (1)
+        else
 		{
-			if(expectOperand) // (2) expects a number or '('
+			if(expectOperand) // expects a number or '('
 			{
-				if(ch >= '0' && ch <= '9') // (3) 0-9
+				if(ch >= '0' && ch <= '9') // 0-9
 				{    
 					while(exp[i + 1] >= '0' && exp[i + 1] <= '9') // skips the number and the digits next to it (if applicable)
 						i++;
 					expectOperand = false; // numbers are already validated and the next char is an operator
 				}
-				else if(ch == '(') // (2)
+				else if(ch == '(') 
 				{
 					parenCount++; // for valid parenthesis pair checking
 				}
-				else //  (2) stops the conversion if the first char entered is an operator
+				else //stops the conversion if the first char entered is an operator
 				{
 					printf("ERROR: Malformed expression.\n");
-					return false;
+					valid = false;
 				}
 			}
 			
-			else // (2) expects a valid operator
+			else // expects a valid operator
 			{
-				if(isOperator(ch)) // (3) from helper function --> checks the validity of an operator
+				if(isOperator(ch)) // from helper function --> checks the validity of an operator
 				{
 					expectOperand = true; // signifies that the next char after an operator is an operand
 				}
-				else if(ch == ')') // (3)
+				else if(ch == ')')
 				{
 					parenCount--; // will become >= 0 if there one or more '(' is identified
-					if(parenCount < 0) // (4) means that ')' came before '('
+
+					if(parenCount < 0) // means that ')' came before '('
 					{
 						printf("ERROR: Mismatched parentheses.\n");
-						return false;
+						valid = false;
 					}
 				}
-				else if(ch == '(') // (3)
+				else if(ch == '(')
 				{
 					printf("ERROR: Missing operator before '('.\n");
-					return false; // there should be an operator right before a parenthesis (tama ba itu?????)
+					valid = false; // there should be an operator right before a parenthesis (tama ba itu?????)
 				}
-				else if(ch >= '0' && ch <= '9') // (3) stops conversion if there is a space between two digits
+				else if(ch >= '0' && ch <= '9') // stops conversion if there is a space between two digits
 				{
 					printf("ERROR: Missing operator between operands.\n");
-					return false;
+					valid = false;
 				}
 			}
 		}
     }
 
-    if(parenCount != 0) // (0)
+    if(parenCount != 0)
     {
         printf("ERROR: Mismatched parentheses.\n");
-        return false; // there is an unmatched parenthesis '('
+        valid = false; // there is an unmatched parenthesis '('
     }
 
-    if(expectOperand) // (0)
+    if(expectOperand) 
     {
         printf("ERROR: Expression ends with an operator.\n");
-        return false; // invalid if the last expression is not an operand
+        valid = false; // invalid if the last expression is not an operand
     }
-    return true;
+    return valid;
 }
 
 /**
@@ -156,10 +144,12 @@ int evaluate(Str equation)
         strcat(equation," ");
     Stack stk = CreateStack();  // equation
 
+	bool zero_divisor = false; // ----- this variable is added to check for invalid expressions that divide by zero 
+	int result; // ----- added to
     int n1,n2;
     int i,j=0;
 
-    for(i=0;i<strlen(equation);i++)
+    for(i = 0; i < strlen(equation) && !zero_divisor; i++)
     {
         Str substring;
         if(equation[i] != ' ')
@@ -179,11 +169,23 @@ int evaluate(Str equation)
                 n2 = Pop(stk);
                 n1 = Pop(stk);
                 //perform operation
-                Push(stk,compute(n1,n2,operator));
+                if((operator == '/' || operator == '%') && n2 == 0)
+				{
+   					printf("ERROR: Division by zero is detected.\n");
+    				zero_divisor = true;
+				}
+				else
+				{
+   				  	Push(stk, compute(n1, n2, operator));
+				}
             }
             j=0;    // reset
         }
     }
     
-    return Pop(stk);
+    if(zero_divisor)
+   	 result = 0;   /* error value */
+	else
+   	 result = Pop(stk);
+return result;
 }
