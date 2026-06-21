@@ -5,6 +5,7 @@ main()
 {
 	char expression[MAX_LIMIT];
 	char result[MAX_LIMIT];
+	int invalid_expression = 1;
 	
 	/* To get the user input */
 	printf("Enter Infix Expression: ");
@@ -13,13 +14,17 @@ main()
 	if(!validateExpression(expression))
     {
         printf("Conversion stopped.\n");
-        return 0;
+        invalid_expression = 0;
     } 									
-	
-	printf("\nConverting expression...\n");
-	infixToPostfix(expression, result);
-	printf("\nPostfix Expression: %s\n",result);
 
-	printf("Result: %d\n",evaluate(result));
+	if(invalid_expression)
+	{
+		printf("\nConverting expression...\n");
+		infixToPostfix(expression, result);
+		printf("\nPostfix Expression: %s\n",result);
+
+		printf("Result: %d\n",evaluate(result));
+	}
+	
 	return 0;
 }
