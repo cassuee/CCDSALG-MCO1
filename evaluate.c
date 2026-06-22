@@ -108,7 +108,7 @@ bool validateExpression(char exp[]) // Error-Handling Function ----> (1-4) is on
 				else if(ch == '(')
 				{
 					printf("ERROR: Missing operator before '('.\n");
-					valid = false; // there should be an operator right before a parenthesis (tama ba itu?????)
+					valid = false; // there should be an operator right before a parenthesis 
 				}
 				else if(ch >= '0' && ch <= '9') // stops conversion if there is a space between two digits
 				{
