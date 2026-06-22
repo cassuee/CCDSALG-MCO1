@@ -21,14 +21,19 @@ int countTokens(String eq)
 double timer(String eq)
 {
     double runtime;
+    int n = 1000;   // number of iterations for average time
+    int i;
     String post;
     clock_t start;
     clock_t end;
     start = clock();
-    infixToPostfix(eq,post);
-    evaluate(post);
+    for(i=0;i<n;i++)
+    {
+        infixToPostfix(eq,post);
+        evaluate(post);
+    }
     end = clock();
-    runtime = ((double)(end-start)/ CLOCKS_PER_SEC);
+    runtime = ((double)(end-start)/ CLOCKS_PER_SEC) / n;
     return runtime;
 }
 
