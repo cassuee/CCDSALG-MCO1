@@ -2,7 +2,7 @@
 #include <time.h>
 
 #define MAX_EXPR_LEN 300000
-#define MAX_TESTS 212
+#define MAX_TESTS 96
 typedef char String[MAX_EXPR_LEN];
 
 int countTokens(String eq)
